@@ -1,10 +1,10 @@
 #!/bin/env bash
 #####################################
-# author:	"ZhouYuXing"                                                           #
-# copyright:	"Copyright 2021, Southwest Minzu University"  #
-# version:	"2.1"                                                                           #
-# maintainer: "Zhouyuxing"                                                       #
-# email: "1037782920@qq.com"                                                #
+# author:	"ZhouYuXing"                                                               #
+# copyright:	"Copyright 2021, Southwest Minzu University"   #
+# version:	"2.1"                                                                                 #
+# maintainer: "Zhouyuxing"                                                          #
+# email: "1037782920@qq.com"                                                   #
 #####################################
 
 
@@ -16,26 +16,23 @@ do
 		c)
 			cutOff="$OPTARG";;
 		h)
-			echo "Usage: `basename $0`  -i inFile.fastq.gz"
-			echo "This script is to convert format, conducting blastn, count up reads number for each species and extract reads sequences for each species."
+			echo -e "\nwinVir:\n       Usage: `basename $0`  -i inFile.fastq.gz\n       winVir is a convenient virus annotation tool for metagenomic data on windows"
 			exit
 	esac
 done
 flag=0
 if [ "$inFile" = "" ];
 then
-	echo "Usage: `basename $0`  -i inFile.fastq.gz"
 	flag=1
 fi
 if [ "$cutOff" = "" ];
 then
 	$cutOff=80
 	echo "The cutOff alignment length was set to 80 as default"
-	echo "Usage: `basename $0`  -i inFile.fas -c cutOff_alignment_length"
 fi
 if [ "$flag" = 1 ];
 then
-	echo  "Usage: `basename $0`  -i inFile.fastq.gz -c cutOff_alignment_length"
+	echo -e "\nwinVir:\n       Usage: `basename $0`  -i inFile.fastq.gz"
 	exit
 fi
 
@@ -114,10 +111,7 @@ if [ ! -d $dirname/${basename%.*}_res ];then
     sed -i '1i\Species\tMeanIdentity\tMeanQueryCover\tReadsNum\tSt_Dev_of_Reads_Location'  $dirname/${basename%.*}_res/Std_Dev_of_Reads.xls && \
     echo "Standard deviation of reads location was generated!" && \
     rm $dirname/${basename%.*}_res/STDEVP.xls  ${inFile%.*}_readsStatAddidName.xls  ${inFile%.*}_blastResSortedUniq.xls ${inFile%.*}_eachReadDetail.xls  ${inFile}_matched.fa ${inFile%.*}_blastResSortedUniqAddidName.xls && \
-
-    echo -e "\n\nConguratulation! Reads corresponding to each species were extracted, you can assemble them using SeqMan..." && \
-    echo "Low \"MeanQueryCover\" and \"St_Dev_of_Reads_Location\" suggests the result might be a false possitive..." && \
-    echo "All done at `date`, Bye Bye~" 
+    echo -e "\n\nwinVir:\n       Conguratulation! Reads corresponding to each species were extracted, you can assemble them using SeqMan...\n       Low \"MeanQueryCover\" and \"St_Dev_of_Reads_Location\" suggests the result might be a false possitive...\n       All done at `date`, Bye Bye~"
 
 else
     rm ${inFile}_matched.fa ${inFile%.*}_readsStatAddidName.xls  ${inFile%.*}_eachReadDetail.xls  ${inFile%.*}_blastResSortedUniq.xls  ${inFile%.*}_blastResSortedUniqAddidName.xls
